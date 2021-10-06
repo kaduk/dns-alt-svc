@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-27T20:11:31.823640+00:00",
+  "timestamp": "2021-10-06T18:52:51.873064+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6027,6 +6027,22 @@
           "updatedAt": "2021-09-27T13:22:41Z"
         }
       ]
+    },
+    {
+      "number": 349,
+      "id": "I_kwDOBsWBq848u7zS",
+      "title": "Referer handling on HSTS behavior",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/issues/349",
+      "state": "OPEN",
+      "author": "enygren",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Given the description:\r\n\r\n\"client SHOULD behave as if it has received an HTTP 307 (Temporary Redirect) status code with this \"https\" URL in the \"Location\" field.\"\r\n\r\nShould we provide any clarification on whether a Referer header should be present (listing the \"http\" Scheme URI) or omitted?  Or should we leave this undefined?",
+      "createdAt": "2021-10-06T18:29:53Z",
+      "updatedAt": "2021-10-06T18:29:53Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -29455,18 +29471,26 @@
       "labels": [],
       "body": "Fixes #340",
       "createdAt": "2021-09-15T17:21:47Z",
-      "updatedAt": "2021-09-27T20:08:16Z",
+      "updatedAt": "2021-10-06T18:32:26Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
-      "baseRefOid": "58a76606928cf7e64033c5036266a67131a5c90e",
+      "baseRefOid": "cd2a236f1f35a624a1bf4f1be1c08c9ce2db37d3",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-https",
-      "headRefOid": "e56ca98f9ab90db5e03c1df96654e68864fed2a8",
+      "headRefOid": "b2be6d2cd526155829f11f89c1afcf5d00c4ea1e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "body": "We may want @royfielding or @mnot to give this a once-over as well.",
+          "createdAt": "2021-09-27T20:14:25Z",
+          "updatedAt": "2021-09-27T20:14:25Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOBsWBq84tlESe",
@@ -29475,52 +29499,370 @@
           },
           "author": "MikeBishop",
           "authorAssociation": "OWNER",
-          "state": "PENDING",
+          "state": "APPROVED",
           "body": "",
           "createdAt": "2021-09-27T19:58:10Z",
-          "updatedAt": "2021-09-27T19:58:10Z",
+          "updatedAt": "2021-09-27T20:13:52Z",
           "comments": [
             {
               "originalPosition": 117,
               "body": "```suggestion\r\n# Service Bindings for HTTP {#https}\r\n```",
               "createdAt": "2021-09-27T19:58:11Z",
-              "updatedAt": "2021-09-27T19:58:11Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 174,
               "body": "```suggestion\r\nSHOULD behave as if it has received an HTTP 307 (Temporary Redirect) status code\r\nwith this \"https\" URL in the \"Location\" field.  (Receipt of an incompatible ServiceMode RR does not\r\n```",
               "createdAt": "2021-09-27T20:01:52Z",
-              "updatedAt": "2021-09-27T20:01:52Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 182,
               "body": "```suggestion\r\nWhen an HTTP connection fails due to an error in the underlying secure\r\n```",
               "createdAt": "2021-09-27T20:02:18Z",
-              "updatedAt": "2021-09-27T20:02:18Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 248,
               "body": "```suggestion\r\n* Meaning: Service Binding for HTTP\r\n```",
               "createdAt": "2021-09-27T20:03:41Z",
-              "updatedAt": "2021-09-27T20:03:41Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 5,
               "body": "```suggestion\r\nto network services, such as for HTTP origins.  SVCB records\r\n```",
               "createdAt": "2021-09-27T20:04:47Z",
-              "updatedAt": "2021-09-27T20:04:47Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 11,
               "body": "```suggestion\r\nThe HTTPS RR is a variation of SVCB for use with HTTP {{!HTTP=I-D.ietf-httpbis-semantics}}.\r\n```",
               "createdAt": "2021-09-27T20:07:32Z",
-              "updatedAt": "2021-09-27T20:07:32Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
             },
             {
               "originalPosition": 20,
               "body": "```suggestion\r\nassociated with a URI with an \"https\" or \"http\" scheme, they currently resolve only A and/or AAAA\r\n```",
               "createdAt": "2021-09-27T20:08:16Z",
-              "updatedAt": "2021-09-27T20:08:16Z"
+              "updatedAt": "2021-09-27T20:13:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tlKwF",
+          "commit": {
+            "abbreviatedOid": "e56ca98"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-27T20:25:42Z",
+          "updatedAt": "2021-09-27T20:33:14Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "This is an example, and the next part is specific to \"https\" origins, so I don't know if it makes sense to list both schemes here.",
+              "createdAt": "2021-09-27T20:25:42Z",
+              "updatedAt": "2021-09-27T20:33:14Z"
+            },
+            {
+              "originalPosition": 117,
+              "body": "My argument here is that a Service Binding mapping is specific to a scheme, not a protocol, and this section only defines a mapping for the \"https\" scheme.  Use of an \"http\" scheme with HTTPS or SVCB is actually forbidden!\r\n\r\nConversely, if you wanted to use some protocol that is not HTTP but somehow relies on the \"https\" scheme (maybe e.g. secure websockets?), this section would still apply.",
+              "createdAt": "2021-09-27T20:29:50Z",
+              "updatedAt": "2021-09-27T20:33:14Z"
+            },
+            {
+              "originalPosition": 182,
+              "body": "Given that HTTP connections don't generically have a secure transport, I find this version harder to understand.",
+              "createdAt": "2021-09-27T20:30:25Z",
+              "updatedAt": "2021-09-27T20:33:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84toD7a",
+          "commit": {
+            "abbreviatedOid": "effee6b"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T13:52:21Z",
+          "updatedAt": "2021-09-28T13:52:22Z",
+          "comments": [
+            {
+              "originalPosition": 182,
+              "body": "If the connection isn't attempting to use a secure transport, it can't satisfy the \"when\" clause anyway.  But sure, we can leave this one.",
+              "createdAt": "2021-09-28T13:52:21Z",
+              "updatedAt": "2021-09-28T13:52:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84toEcj",
+          "commit": {
+            "abbreviatedOid": "effee6b"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T13:53:50Z",
+          "updatedAt": "2021-09-28T13:53:50Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "But you still have to do the lookup with \"http\"-schemed URIs, or you won't discover the HSTS-like directive.  So this does apply to all HTTP usage, just differently.",
+              "createdAt": "2021-09-28T13:53:50Z",
+              "updatedAt": "2021-09-28T13:53:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84toGRa",
+          "commit": {
+            "abbreviatedOid": "effee6b"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T13:59:03Z",
+          "updatedAt": "2021-09-28T13:59:03Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Here again, I don't think it is specific.  If a record exists for the hostname, you apply the behavior in 8.5 and then all of these things are applicable.  When a client makes a connection to any HTTP URI, \"http\" or \"https\", they're doing an HTTPS resolution so that \"clients that learn additional information can gain privacy, performance, and operational advantages\" including the fact that they could use TLS.",
+              "createdAt": "2021-09-28T13:59:03Z",
+              "updatedAt": "2021-09-28T13:59:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84toSeF",
+          "commit": {
+            "abbreviatedOid": "effee6b"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T14:31:48Z",
+          "updatedAt": "2021-09-28T14:53:52Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "It does apply to \"http\", but it doesn't create a service binding for \"http\".  The implications for \"http\" usage are a special behavior of the HTTPS RR type, separate from the Service Binding functionality, which is only for \"https\".\r\n\r\nHow about \"Using Service Bindings with HTTP\", or just \"The HTTPS RR Type\"?",
+              "createdAt": "2021-09-28T14:31:48Z",
+              "updatedAt": "2021-09-28T14:53:52Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "The next sentence is\r\n```\r\nThis is adequate for services that use\r\nbasic HTTP/TLS (fixed port, no QUIC, no {{!ECH=I-D.ietf-tls-esni}}), but\r\nclients that learn additional information can ...\r\n```\r\nClients don't use HTTP/TLS when the URI has an \"http\" scheme, so this becomes a non sequitur ... unless we're talking about RFC 8164, which is another layer of complexity that I would prefer not to raise.\r\n\r\nThis is just supposed to be an example, so there's no need to make it comprehensive.  How about: \"For example, when accessing an \"https\" URI, clients currently resolve only ...\"?",
+              "createdAt": "2021-09-28T14:50:22Z",
+              "updatedAt": "2021-09-28T14:53:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84togSD",
+          "commit": {
+            "abbreviatedOid": "effee6b"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:12:37Z",
+          "updatedAt": "2021-09-28T15:12:38Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "\"Using Service Bindings with HTTP\" sounds good.",
+              "createdAt": "2021-09-28T15:12:37Z",
+              "updatedAt": "2021-09-28T15:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tohQc",
+          "commit": {
+            "abbreviatedOid": "4282500"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:15:30Z",
+          "updatedAt": "2021-09-28T15:15:30Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "Done",
+              "createdAt": "2021-09-28T15:15:30Z",
+              "updatedAt": "2021-09-28T15:15:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tojMD",
+          "commit": {
+            "abbreviatedOid": "4282500"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:21:34Z",
+          "updatedAt": "2021-09-28T15:21:35Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Well, I'd contend that failure to use TLS isn't adequate and finding the HTTPS record enables you to use TLS, so that remains a true statement.  But you're arguing that that's a special property of HTTPS and irrelevant to the SVCB class as a whole, which is what this example is trying to illustrate.\r\n\r\nI still feel like this statement is true of HTTP all-up, and I don't believe the example is more illustrative by restricting it to a particular scheme.  Not dying on this hill, but I think the example is overly specific when it doesn't add anything.",
+              "createdAt": "2021-09-28T15:21:34Z",
+              "updatedAt": "2021-09-28T15:21:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tojbn",
+          "commit": {
+            "abbreviatedOid": "74eae44"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:22:20Z",
+          "updatedAt": "2021-09-28T15:22:20Z",
+          "comments": [
+            {
+              "originalPosition": 248,
+              "body": "This is another instance of the same question.  Maybe we could agree on 'Service Binding for \"https\" origins', 'Service Binding for the \"https\" URI scheme', or 'Service Binding type for use with HTTP'?",
+              "createdAt": "2021-09-28T15:22:20Z",
+              "updatedAt": "2021-09-28T15:22:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tol0R",
+          "commit": {
+            "abbreviatedOid": "74eae44"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:29:43Z",
+          "updatedAt": "2021-09-28T15:29:44Z",
+          "comments": [
+            {
+              "originalPosition": 248,
+              "body": "As before, I prefer the last option since it affects all HTTP requests.",
+              "createdAt": "2021-09-28T15:29:44Z",
+              "updatedAt": "2021-09-28T15:29:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tpBpL",
+          "commit": {
+            "abbreviatedOid": "74eae44"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T17:10:39Z",
+          "updatedAt": "2021-09-28T17:54:01Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "OK, how about\r\n\r\n> For example, HTTP clients currently resolve only A and/or AAAA records for the origin hostname, learning only its IP addresses.  If HTTP clients learn more information about the origin before connecting, they may be able to upgrade \"http\" URLs to \"https\", enable HTTP/3 or ECH, or switch to an operationally preferable endpoint.",
+              "createdAt": "2021-09-28T17:10:40Z",
+              "updatedAt": "2021-09-28T17:54:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tpeu_",
+          "commit": {
+            "abbreviatedOid": "74eae44"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T19:00:52Z",
+          "updatedAt": "2021-09-28T19:00:53Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Works for me.",
+              "createdAt": "2021-09-28T19:00:53Z",
+              "updatedAt": "2021-09-28T19:00:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tph7Z",
+          "commit": {
+            "abbreviatedOid": "906cf0f"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T19:14:54Z",
+          "updatedAt": "2021-09-28T19:14:54Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Done",
+              "createdAt": "2021-09-28T19:14:54Z",
+              "updatedAt": "2021-09-28T19:14:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84tpiQR",
+          "commit": {
+            "abbreviatedOid": "b2be6d2"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T19:16:26Z",
+          "updatedAt": "2021-09-28T19:16:26Z",
+          "comments": [
+            {
+              "originalPosition": 248,
+              "body": "Done",
+              "createdAt": "2021-09-28T19:16:26Z",
+              "updatedAt": "2021-09-28T19:16:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFFZh",
+          "commit": {
+            "abbreviatedOid": "b2be6d2"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Looks good other than the one comment above (which I don't feel strongly about).",
+          "createdAt": "2021-10-06T18:25:22Z",
+          "updatedAt": "2021-10-06T18:32:26Z",
+          "comments": [
+            {
+              "originalPosition": 152,
+              "body": "```suggestion\r\nsecure and authenticated \"https\" scheme connection.\r\n```",
+              "createdAt": "2021-10-06T18:25:22Z",
+              "updatedAt": "2021-10-06T18:32:26Z"
             }
           ]
         }
@@ -29628,6 +29970,60 @@
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-add-mandatory",
       "headRefOid": "ede2bf2810eeea9e4bdad96234bc6c2c17340c3c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 348,
+      "id": "PR_kwDOBsWBq84sVV0d",
+      "title": "Adjust H3 ref",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/pull/348",
+      "state": "MERGED",
+      "author": "MikeBishop",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "I don't think we have a normative dependency on any of the HTTP mappings.  We might ought to have one on HTTP itself, but I'm raising that in my review on #341.",
+      "createdAt": "2021-09-27T20:12:20Z",
+      "updatedAt": "2021-09-27T20:34:17Z",
+      "baseRepository": "MikeBishop/dns-alt-svc",
+      "baseRefName": "main",
+      "baseRefOid": "58a76606928cf7e64033c5036266a67131a5c90e",
+      "headRepository": "MikeBishop/dns-alt-svc",
+      "headRefName": "h3_refs",
+      "headRefOid": "1f504cb0b732049bb6cae668c2534b897fd26e28",
+      "closedAt": "2021-09-27T20:34:17Z",
+      "mergedAt": "2021-09-27T20:34:17Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "cd2a236f1f35a624a1bf4f1be1c08c9ce2db37d3"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 350,
+      "id": "PR_kwDOBsWBq84s1oQN",
+      "title": "mandatory to required to avoid confusion",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/pull/350",
+      "state": "OPEN",
+      "author": "enygren",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We also used \"mandatory\" in a way different from the SvcParam.  Proposing changing that to \"required\"",
+      "createdAt": "2021-10-06T18:52:28Z",
+      "updatedAt": "2021-10-06T18:52:28Z",
+      "baseRepository": "MikeBishop/dns-alt-svc",
+      "baseRefName": "bemasc-add-mandatory",
+      "baseRefOid": "ede2bf2810eeea9e4bdad96234bc6c2c17340c3c",
+      "headRepository": "MikeBishop/dns-alt-svc",
+      "headRefName": "enygren-clarify-mandatory-wording",
+      "headRefOid": "d95da44bde5119f2a9fb249d967de82f0b46c495",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
