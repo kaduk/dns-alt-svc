@@ -5,9 +5,9 @@
 DNSOP Working Group                                          B. Schwartz
 Internet-Draft                                                    Google
 Intended status: Standards Track                               M. Bishop
-Expires: 9 April 2022                                          E. Nygren
+Expires: 10 April 2022                                         E. Nygren
                                                      Akamai Technologies
-                                                          6 October 2021
+                                                          7 October 2021
 
 
  Service binding and parameter specification via the DNS (DNS SVCB and
@@ -18,15 +18,15 @@ Abstract
 
    This document specifies the "SVCB" and "HTTPS" DNS resource record
    (RR) types to facilitate the lookup of information needed to make
-   connections to network services, such as for HTTPS origins.  SVCB
+   connections to network services, such as for HTTP origins.  SVCB
    records allow a service to be provided from multiple alternative
    endpoints, each with associated parameters (such as transport
    protocol configuration and keys for encrypting the TLS ClientHello).
    They also enable aliasing of apex domains, which is not possible with
-   CNAME.  The HTTPS RR is a variation of SVCB for HTTPS and HTTP
-   origins.  By providing more information to the client before it
-   attempts to establish a connection, these records offer potential
-   benefits to both performance and privacy.
+   CNAME.  The HTTPS RR is a variation of SVCB for use with HTTP [HTTP].
+   By providing more information to the client before it attempts to
+   establish a connection, these records offer potential benefits to
+   both performance and privacy.
 
    TO BE REMOVED: This document is being collaborated on in Github at:
    https://github.com/MikeBishop/dns-alt-svc
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 April 2022.
+   This Internet-Draft will expire on 10 April 2022.
 
 Copyright Notice
 
@@ -103,7 +103,7 @@ Table of Contents
      6.4.  "ipv4hint" and "ipv6hint"
      6.5.  "mandatory"
    7.  ServiceMode RR compatibility and mandatory keys
-   8.  Using SVCB with HTTPS and HTTP
+   8.  Using Service Bindings with HTTP
      8.1.  Query names for HTTPS RRs
      8.2.  Comparison with Alt-Svc
        8.2.1.  ALPN usage
@@ -125,7 +125,7 @@ Table of Contents
        10.3.2.  Apex aliasing
        10.3.3.  Parameter binding
        10.3.4.  Multi-CDN
-       10.3.5.  Non-HTTPS uses
+       10.3.5.  Non-HTTP uses
    11. Interaction with other standards
    12. Security Considerations
    13. Privacy Considerations
@@ -164,14 +164,13 @@ Table of Contents
    connections to a sub-optimal default server, negotiating a preferred
    protocol, and providing relevant public keys.
 
-   For example, when clients need to make a connection to fetch
-   resources associated with an HTTPS URI, they currently resolve only A
-   and/or AAAA records for the origin hostname.  This is adequate for
-   services that use basic HTTPS (fixed port, no QUIC, no [ECH]), but
-   clients that learn additional information can gain privacy,
-   performance, and operational advantages.  It is highly desirable to
-   minimize the number of round-trips and lookups required to learn this
-   additional information.
+   For example, HTTP clients currently resolve only A and/or AAAA
+   records for the origin hostname, learning only its IP addresses.  If
+   an HTTP client learns more about the origin before connecting, it may
+   be able to upgrade "http" URLs to "https", enable HTTP/3 or Encrypted
+   ClientHello [ECH], or switch to an operationally preferable endpoint.
+   It is highly desirable to minimize the number of round-trips and
+   lookups required to learn this additional information.
 
    The SVCB and HTTPS RRs also help when the operator of a service
    wishes to delegate operational control to one or more other domains,
@@ -186,7 +185,7 @@ Table of Contents
    resource record that can be applied directly and efficiently to a
    wide range of services (Section 2).  The HTTPS RR is then defined as
    a special case of SVCB that improves efficiency and convenience for
-   use with HTTPS (Section 8) by avoiding the need for an Attrleaf label
+   use with HTTP (Section 8) by avoiding the need for an Attrleaf label
    [Attrleaf] (Section 8.1).  Other protocols with similar needs may
    follow the pattern of HTTPS and assign their own SVCB-compatible RR
    types.
@@ -226,7 +225,7 @@ Table of Contents
       delegation of operational authority for an origin within the DNS
       to an alternate name.
 
-   Additional goals specific to HTTPS RRs and the HTTPS use-case
+   Additional goals specific to HTTPS RRs and the HTTP use-cases
    include:
 
    *  Connect directly to HTTP/3 (QUIC transport) alternative endpoints
@@ -238,10 +237,10 @@ Table of Contents
    *  Support non-default TCP and UDP ports
 
    *  Enable SRV-like benefits (e.g. apex delegation, as mentioned
-      above) for HTTP(S), where SRV [SRV] has not been widely adopted
+      above) for HTTP, where SRV [SRV] has not been widely adopted
 
-   *  Provide an HSTS-like indication [HSTS] signaling that the HTTPS
-      scheme should be used instead of HTTP for this request (see
+   *  Provide an HSTS-like indication [HSTS] signaling that the "https"
+      scheme should be used instead of "http" for this request (see
       Section 8.5).
 
 1.2.  Overview of the SVCB RR
@@ -283,11 +282,11 @@ Table of Contents
    authoritative for the origin, along with parameters associated with
    each of these alternative endpoints.
 
-   For the HTTPS use-case, the HTTPS RR enables many of the benefits of
-   Alt-Svc [AltSvc] without waiting for a full HTTP connection
-   initiation (multiple roundtrips) before learning of the preferred
-   alternative, and without necessarily revealing the user's intended
-   destination to all entities along the network path.
+   For HTTP use-cases, the HTTPS RR enables many of the benefits of Alt-
+   Svc [AltSvc] without waiting for a full HTTP connection initiation
+   (multiple roundtrips) before learning of the preferred alternative,
+   and without necessarily revealing the user's intended destination to
+   all entities along the network path.
 
 1.3.  Parameter for Encrypted ClientHello
 
@@ -302,8 +301,8 @@ Table of Contents
 
    *  The "service" is the information source identified by the
       authority and scheme of the URI, capable of providing access to
-      the resource.  For HTTPS URIs, the "service" corresponds to an
-      HTTPS "origin" [RFC6454].
+      the resource.  For "https" URIs, the "service" corresponds to an
+      "origin" [RFC6454].
 
    *  The "service name" is the host portion of the authority.
 
@@ -640,7 +639,7 @@ Table of Contents
 
    A client is called "SVCB-optional" if it can connect without the use
    of ServiceMode records, and "SVCB-reliant" otherwise.  Clients for
-   pre-existing protocols (e.g.  HTTPS) SHALL implement SVCB-optional
+   pre-existing protocols (e.g.  HTTP) SHALL implement SVCB-optional
    behavior (except as noted in Section 3.1 and Section 9.1).
 
    SVCB-optional clients SHOULD issue in parallel any other DNS queries
@@ -657,8 +656,8 @@ Table of Contents
 
 3.1.  Handling resolution failures
 
-   If DNS responses are cryptographically protected (e.g. using DNSSEC,
-   TLS [DoT], or HTTPS [DoH]), and SVCB resolution fails due to an
+   If DNS responses are cryptographically protected (e.g. using DNSSEC
+   or TLS [DoT][DoH]), and SVCB resolution fails due to an
    authentication error, SERVFAIL response, transport error, or timeout,
    a SVCB-optional client SHOULD abandon the connection attempt like a
    SVCB-reliant client would.  Otherwise, an active attacker could mount
@@ -891,10 +890,13 @@ Table of Contents
 6.  Initial SvcParamKeys
 
    A few initial SvcParamKeys are defined here.  These keys are useful
-   for HTTPS, and most are applicable to other protocols as well.  Each
-   new protocol mapping document MUST specify which keys are applicable
-   and safe to use.  Protocol mappings MAY alter the interpretation of
-   SvcParamKeys but MUST NOT alter their presentation or wire formats.
+   for the "https" scheme, and most are applicable to other schemes as
+   well.
+
+   Each new protocol mapping document MUST specify which keys are
+   applicable and safe to use.  Protocol mappings MAY alter the
+   interpretation of SvcParamKeys but MUST NOT alter their presentation
+   or wire formats.
 
 6.1.  "alpn" and "no-default-alpn"
 
@@ -1116,16 +1118,16 @@ Table of Contents
    SHOULD NOT appear in the list either.  (Including them wastes space
    and otherwise has no effect.)
 
-8.  Using SVCB with HTTPS and HTTP
+8.  Using Service Bindings with HTTP
 
    Use of any protocol with SVCB requires a protocol-specific mapping
-   specification.  This section specifies the mapping for HTTPS and HTTP
-   [I-D.draft-ietf-httpbis-semantics].
+   specification.  This section specifies the mapping for the "http" and
+   "https" URI schemes [I-D.draft-ietf-httpbis-semantics].
 
-   To enable special handling for the HTTPS and HTTP use-cases, the
-   HTTPS RR type is defined as a SVCB-compatible RR type, specific to
-   the https and http schemes.  Clients MUST NOT perform SVCB queries or
-   accept SVCB responses for "https" or "http" schemes.
+   To enable special handling for HTTP use-cases, the HTTPS RR type is
+   defined as a SVCB-compatible RR type, specific to the "https" and
+   "http" schemes.  Clients MUST NOT perform SVCB queries or accept SVCB
+   responses for "https" or "http" schemes.
 
    The HTTPS RR wire format and presentation format are identical to
    SVCB, and both share the SvcParamKey registry.  SVCB semantics apply
@@ -1142,15 +1144,15 @@ Table of Contents
    "http/1.1".  The "automatically mandatory" keys (Section 7) are
    "port" and "no-default-alpn".  (As described in Section 7, clients
    must either implement these keys or ignore any RR in which they
-   appear.)  Clients that restrict the HTTPS destination port (e.g.
-   using the "bad ports" list from [FETCH]) SHOULD apply the same
+   appear.)  Clients that restrict the destination port in "https" URIs
+   (e.g. using the "bad ports" list from [FETCH]) SHOULD apply the same
    restriction to the "port" SvcParam.
 
-   The presence of an HTTPS RR for an origin also indicates that all
-   HTTP resources are available over HTTPS, as discussed in Section 8.5.
-   This allows HTTPS RRs to apply to pre-existing "http" scheme URLs,
-   while ensuring that the client uses a secure and authenticated HTTPS
-   connection.
+   The presence of an HTTPS RR for an origin also indicates that clients
+   should connect securely and use the "https" scheme, as discussed in
+   Section 8.5.  This allows HTTPS RRs to apply to pre-existing "http"
+   scheme URLs, while ensuring that the client uses a secure and
+   authenticated connection.
 
    The HTTPS RR parallels the concepts introduced in the HTTP
    Alternative Services proposed standard [AltSvc].  Clients and servers
@@ -1165,7 +1167,7 @@ Table of Contents
 
    By removing the Attrleaf labels [Attrleaf] used in SVCB, this
    construction enables offline DNSSEC signing of wildcard domains,
-   which are commonly used with HTTPS.  Reusing the service name also
+   which are commonly used with HTTP.  Reusing the service name also
    allows the targets of existing CNAME chains (e.g.  CDN hosts) to
    start returning HTTPS RR responses without requiring origin domains
    to configure and maintain an additional delegation.
@@ -1184,10 +1186,10 @@ Table of Contents
 8.2.  Comparison with Alt-Svc
 
    Publishing a ServiceMode HTTPS RR in DNS is intended to be similar to
-   transmitting an Alt-Svc field value over HTTPS, and receiving an
-   HTTPS RR is intended to be similar to receiving that field value over
-   HTTPS.  However, there are some differences in the intended client
-   and server behavior.
+   transmitting an Alt-Svc field value over HTTP, and receiving an HTTPS
+   RR is intended to be similar to receiving that field value over HTTP.
+   However, there are some differences in the intended client and server
+   behavior.
 
 8.2.1.  ALPN usage
 
@@ -1323,17 +1325,17 @@ Table of Contents
 
    If an HTTPS RR query for this "https" URL returns any AliasMode HTTPS
    RRs, or any compatible ServiceMode HTTPS RRs (see Section 7), the
-   client SHOULD act as if it has received an HTTP "307 Temporary
-   Redirect" redirect to this "https" URL.  (Receipt of an incompatible
-   ServiceMode RR does not trigger the redirect behavior.)  Because
-   HTTPS RRs are received over an often insecure channel (DNS), clients
-   MUST NOT place any more trust in this signal than if they had
-   received a 307 redirect over cleartext HTTP.  If this redirection
-   would result in a loss of functionality (e.g. important resources
-   that are only available on the "http" origin), the operator MUST NOT
-   publish an HTTPS RR.
+   client SHOULD behave as if it has received an HTTP 307 (Temporary
+   Redirect) status code with this "https" URL in the "Location" field.
+   (Receipt of an incompatible ServiceMode RR does not trigger the
+   redirect behavior.)  Because HTTPS RRs are received over an often
+   insecure channel (DNS), clients MUST NOT place any more trust in this
+   signal than if they had received a 307 redirect over cleartext HTTP.
+   If this redirection would result in a loss of functionality (e.g.
+   important resources that are only available on the "http" origin),
+   the operator MUST NOT publish an HTTPS RR.
 
-   When an HTTPS connection fails due to an error in the underlying
+   When an "https" connection fails due to an error in the underlying
    secure transport, such as an error in certificate validation, some
    clients currently offer a "user recourse" that allows the user to
    bypass the security error and connect anyway.  When making an "https"
@@ -1452,7 +1454,7 @@ Table of Contents
    @ 7200 IN HTTPS 1 . alpn=h3
 
    to indicate that https://simple.example supports QUIC in addition to
-   HTTPS over TCP (an implicit default).  The record could also include
+   TLS over TCP (the implicit default).  The record could also include
    other information (e.g. non-standard port, ECH configuration).  For
    https://simple.example:8443, the record would be:
 
@@ -1480,8 +1482,8 @@ Table of Contents
 
    With this record in place, HTTPS-RR-aware clients will use the same
    server pool for aliased.example and www.aliased.example.  (They will
-   also upgrade to HTTPS on aliased.example.)  Non-HTTPS-RR-aware
-   clients will just ignore the new record.
+   also upgrade "http://aliased.example/..." to "https".)  Non-HTTPS-RR-
+   aware clients will just ignore the new record.
 
    Similar to CNAME, HTTPS RRs have no impact on the origin name.  When
    connecting, clients will continue to treat the authoritative origins
@@ -1593,8 +1595,8 @@ Table of Contents
       HTTPS-aware recursive resolver.  An alternative would be to alias
       the zone apex directly to a name managed by a CDN.
 
-   *  The A, AAAA, HTTPS resolutions are independent lookups so clients
-      may observe and follow different CNAMEs to different CDNs.
+   *  The A, AAAA, and HTTPS resolutions are independent lookups, so
+      clients may observe and follow different CNAMEs to different CDNs.
       Clients may thus find a TargetName pointing to a name other than
       the one which returned along with the A and AAAA lookups and will
       need to do an additional resolution for them.  Including ipv6hint
@@ -1606,9 +1608,9 @@ Table of Contents
       records from a different CDN which does support ECH.  Clients will
       be unable to use ECH in this case.
 
-10.3.5.  Non-HTTPS uses
+10.3.5.  Non-HTTP uses
 
-   For services other than HTTPS, the SVCB RR and an Attrleaf label
+   For protocols other than HTTP, the SVCB RR and an Attrleaf label
    [Attrleaf] will be used.  For example, to reach an example resource
    of "baz://api.example.com:8765", the following SVCB record would be
    used to alias it to "svc4-baz.example.net." which in-turn could
@@ -1658,7 +1660,7 @@ Table of Contents
    always deny service to SVCB queries, but network intermediaries can
    often prevent resolution as well, even when the client and recursive
    resolver validate DNSSEC and use a secure transport.  These downgrade
-   attacks can prevent the HTTPS upgrade provided by the HTTPS RR
+   attacks can prevent the "https" upgrade provided by the HTTPS RR
    (Section 8.5), and disable the encryption enabled by the "ech"
    SvcParamKey (Section 9).  To prevent downgrades, Section 3.1
    recommends that clients abandon the connection attempt when such an
@@ -1710,7 +1712,7 @@ Table of Contents
 
 14.2.  HTTPS RRType
 
-   This document defines a new DNS RR type, HTTPS, whose value 65 has
+   This document defines a new DNS RR type, "HTTPS", whose value 65 has
    been allocated by IANA from the "Resource Record (RR) TYPEs"
    subregistry of the "Domain Name System (DNS) Parameters" registry:
 
@@ -1718,7 +1720,7 @@ Table of Contents
 
    *  Value: 65
 
-   *  Meaning: Service Binding for HTTPS
+   *  Meaning: Service Binding type for use with HTTP
 
    *  Reference: This document
 
@@ -1877,6 +1879,12 @@ Table of Contents
               Transport Security (HSTS)", RFC 6797,
               DOI 10.17487/RFC6797, November 2012,
               <https://datatracker.ietf.org/doc/html/rfc6797>.
+
+   [HTTP]     Fielding, R. T., Nottingham, M., and J. Reschke, "HTTP
+              Semantics", Work in Progress, Internet-Draft, draft-ietf-
+              httpbis-semantics-19, 12 September 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-
+              semantics-19>.
 
    [I-D.draft-ietf-httpbis-semantics]
               Fielding, R. T., Nottingham, M., and J. Reschke, "HTTP
@@ -2110,7 +2118,7 @@ Appendix B.  HTTP Mapping Summary
             +--------------------------+----------------------+
             | *SvcParam defaults*      | alpn: ["http/1.1"]   |
             +--------------------------+----------------------+
-            | *Special behaviors*      | HTTP to HTTPS        |
+            | *Special behaviors*      | "http" to "https"    |
             |                          | upgrade              |
             +--------------------------+----------------------+
 
