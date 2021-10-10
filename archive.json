@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-06T18:52:51.873064+00:00",
+  "timestamp": "2021-10-10T00:22:38.782617+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -5504,16 +5504,24 @@
       "id": "MDU6SXNzdWU4MTc3NTY2OTI=",
       "title": "Decide which reference type you want for Attrleaf",
       "url": "https://github.com/MikeBishop/dns-alt-svc/issues/300",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "moonshiner",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Normative or Informative? there are both here.\r\n\r\nLine Numbers included. \r\n\r\n92:({{https}}) by avoiding the need for an Attrleaf label {{?Attrleaf=RFC8552}}\r\n332:follows the Attrleaf naming pattern {{Attrleaf}}, so the scheme MUST be\r\n981:By removing the Attrleaf labels {{?Attrleaf}}\r\n1366:For services other than HTTPS, the SVCB RR and an Attrleaf label {{?Attrleaf}}\r\n1394:Registry {{!Attrleaf}}.  The scheme SHOULD have an entry in the IANA URI Schemes\r\n1540:Per {{?Attrleaf}}, please add the following entry to the DNS Underscore",
       "createdAt": "2021-02-26T23:53:11Z",
-      "updatedAt": "2021-02-26T23:53:11Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-10-06T19:51:48Z",
+      "closedAt": "2021-10-06T19:51:48Z",
+      "comments": [
+        {
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed by #351",
+          "createdAt": "2021-10-06T19:51:48Z",
+          "updatedAt": "2021-10-06T19:51:48Z"
+        }
+      ]
     },
     {
       "number": 305,
@@ -5546,7 +5554,7 @@
       "id": "MDU6SXNzdWU4NDM4Nzk0NDc=",
       "title": "Initial SvcParamKeys is missing mandatory",
       "url": "https://github.com/MikeBishop/dns-alt-svc/issues/310",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "marka63",
       "authorAssociation": "NONE",
       "assignees": [
@@ -5555,8 +5563,8 @@
       "labels": [],
       "body": "While `ServiceMode RR compatibility and mandatory keys` immediately follows `Initial SvcParamKeys`, `mandatory` should be listed in the previous section.",
       "createdAt": "2021-03-29T22:40:16Z",
-      "updatedAt": "2021-09-27T13:37:43Z",
-      "closedAt": null,
+      "updatedAt": "2021-10-06T19:14:18Z",
+      "closedAt": "2021-10-06T19:14:18Z",
       "comments": []
     },
     {
@@ -5951,7 +5959,7 @@
       "id": "MDU6SXNzdWU5OTE0NTk2MDU=",
       "title": "HTTPS as a protocol",
       "url": "https://github.com/MikeBishop/dns-alt-svc/issues/340",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "MikeBishop",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -5960,8 +5968,8 @@
       "labels": [],
       "body": "The document pervasively refers to \"HTTPS\" as a protocol.  However, the current terminology appears to be that HTTP is a protocol, which can be used to access \"http\"-schemed and \"https\"-schemed URIs, as well as other schemes which might be transported.  We should do a pass over the document and ensure our use of HTTP/HTTPS/\"http\"/\"https\" is consistent with https://httpwg.org/http-core/draft-ietf-httpbis-semantics-latest.html.",
       "createdAt": "2021-09-08T19:29:49Z",
-      "updatedAt": "2021-09-15T17:21:35Z",
-      "closedAt": null,
+      "updatedAt": "2021-10-07T20:02:54Z",
+      "closedAt": "2021-10-07T20:02:54Z",
       "comments": []
     },
     {
@@ -5993,15 +6001,15 @@
       "id": "I_kwDOBsWBq848DiXg",
       "title": "ALPN text incorrectly implies something about Alt-Svc",
       "url": "https://github.com/MikeBishop/dns-alt-svc/issues/343",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "> Unlike Alt-Svc Field Values, HTTPS RRs can contain multiple ALPN IDs, and clients are encouraged to offer additional ALPNs that they support.\r\n\r\nFrom a grammatical perspective, the construction of this sentence is problematic.  It could mean:\r\n\r\n1. HTTPS RRs differ from Alt-Svc in that they can convey multiple ALPN IDs with each entry.  Consequently, clients are encouraged to include multiple ALPN IDs when they attempt to make a connection.\r\n2. HTTPS RRs differ from Alt-Svc in that they can convey multiple ALPN IDs with each entry.  They also differ in that clients are permitted to include additional ALPN IDs when they make a connection.\r\n\r\nWhen it comes to the latter part, both interpretations are problematic.  Either way, it might be read to imply something that Alt-Svc (RFC 7838) does not say.  The relevant text in RFC 7838 says:\r\n\r\n>  If the connection to the alternative service does not negotiate the expected protocol (for example, ALPN fails to negotiate h2, or an Upgrade request to h2c is not accepted), the connection to the alternative service MUST be considered to have failed.\r\n\r\nThis does not say anything about what clients offer when attempting to connect to a server, only what they ultimately accept.  However, the text first quoted here seems to imply that clients are somehow prohibited from offering additional ALPN IDs when connecting to an alternative service.\r\n\r\nALPN depends (critically) on clients representing the set of protocols that they are willing to use faithfully.  Implying that they might not, especially when using a medium with oft-questionable security properties to drive that decision, is a bad idea.\r\n\r\nI think that this is simply editorial.  The procedures elsewhere in the document are good.  It's a little fiddly to get right, but I will attempt to propose a small change shortly that should fix this.",
       "createdAt": "2021-09-27T00:46:03Z",
-      "updatedAt": "2021-09-27T00:46:03Z",
-      "closedAt": null,
+      "updatedAt": "2021-10-07T21:02:58Z",
+      "closedAt": "2021-10-07T21:02:57Z",
       "comments": []
     },
     {
@@ -6033,16 +6041,31 @@
       "id": "I_kwDOBsWBq848u7zS",
       "title": "Referer handling on HSTS behavior",
       "url": "https://github.com/MikeBishop/dns-alt-svc/issues/349",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "enygren",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Given the description:\r\n\r\n\"client SHOULD behave as if it has received an HTTP 307 (Temporary Redirect) status code with this \"https\" URL in the \"Location\" field.\"\r\n\r\nShould we provide any clarification on whether a Referer header should be present (listing the \"http\" Scheme URI) or omitted?  Or should we leave this undefined?",
       "createdAt": "2021-10-06T18:29:53Z",
-      "updatedAt": "2021-10-06T18:29:53Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-10-06T19:49:55Z",
+      "closedAt": "2021-10-06T19:49:55Z",
+      "comments": [
+        {
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think redirects [don't affect Referer](https://stackoverflow.com/a/5441932), so maybe we don't have to worry about this?",
+          "createdAt": "2021-10-06T19:08:45Z",
+          "updatedAt": "2021-10-06T19:08:45Z"
+        },
+        {
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good point.  #wontfix.",
+          "createdAt": "2021-10-06T19:49:55Z",
+          "updatedAt": "2021-10-06T19:49:55Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -29010,24 +29033,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NzEzNzU2OTcy",
       "title": "Respond to comments from Dale Worley",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/335",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2021-08-16T21:26:45Z",
-      "updatedAt": "2021-09-27T13:32:41Z",
+      "updatedAt": "2021-10-07T21:02:29Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
-      "baseRefOid": "58a76606928cf7e64033c5036266a67131a5c90e",
+      "baseRefOid": "be222a737c9cc808712c8f7257964ed466fdd27c",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-worley-review",
-      "headRefOid": "5b969fc8045f5027f2cb5f46624ef7e25f3972ba",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "566b987e6586a294c42708167a16d57df31261b9",
+      "closedAt": "2021-10-07T21:02:26Z",
+      "mergedAt": "2021-10-07T21:02:26Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "955de2c9a04975b850e139850dc7b9ac40827011"
+      },
       "comments": [],
       "reviews": [
         {
@@ -29240,6 +29265,217 @@
               "body": "I've relaxed the recommendation to use SERVFAIL specifically.",
               "createdAt": "2021-09-09T20:44:31Z",
               "updatedAt": "2021-09-09T20:44:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFtEs",
+          "commit": {
+            "abbreviatedOid": "5b969fc"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "While this took awhile to review, this generally looks good and has a bunch of improvements in it.  See some minor comments above for discussion prior to Approval.\r\nThis may also take some work to merge in and we should re-validate that no HTTPS/https/HTTP things slipped in.",
+          "createdAt": "2021-10-06T21:33:06Z",
+          "updatedAt": "2021-10-06T22:25:48Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "It's not just for the case where the SVCB record is absent.  Some of the optimizations later on rely on this parallel behavior (eg, for cases where the TargetName is already in-cache).\r\n\r\n```suggestion\r\nbe needed for connection establishment if the SVCB record is absent, as well as to enable optimizations in {{optimizations}}.\r\n```",
+              "createdAt": "2021-10-06T21:33:06Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            },
+            {
+              "originalPosition": 132,
+              "body": "Do we want to mention that the A/AAAA for the TargetName may already be in-cache with valid/unexpired entries, or is this obvious?",
+              "createdAt": "2021-10-06T21:37:18Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            },
+            {
+              "originalPosition": 258,
+              "body": "What prevents a SVCB-compatible record from being in a different Class if defined as such?",
+              "createdAt": "2021-10-06T22:10:36Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            },
+            {
+              "originalPosition": 262,
+              "body": "If we have a SVCB-compatible record like \"NS2\" that itself is used for recursive to authoritative logic, it's possible that this might not be identical in-terms of Recursive resolution process (or Auth server processing).  How do we allow for such in the future ?  Should those be \"unless specified otherwise\"?",
+              "createdAt": "2021-10-06T22:13:30Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            },
+            {
+              "originalPosition": 265,
+              "body": "The quotes make this seem like a literal RR type.  Is there a convention for this, or would there be some better way to represent this?",
+              "createdAt": "2021-10-06T22:14:38Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            },
+            {
+              "originalPosition": 270,
+              "body": "```suggestion\r\nthe HTTPS RR type ({{https}}), which avoids Attrleaf label prefixes {{?Attrleaf=RFC8552}} in order to improve\r\ncompatibility with wildcards and CNAMEs, which are widely used with HTTP.\r\n\r\n```\r\n",
+              "createdAt": "2021-10-06T22:19:15Z",
+              "updatedAt": "2021-10-07T20:20:12Z"
+            },
+            {
+              "originalPosition": 291,
+              "body": "Are we sure we don't want to include some of this block?  While it may be somewhat redundant, having it repeated here helps with readability, IMHO.",
+              "createdAt": "2021-10-06T22:21:55Z",
+              "updatedAt": "2021-10-06T22:25:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uF2D1",
+          "commit": {
+            "abbreviatedOid": "5b969fc"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T22:26:23Z",
+          "updatedAt": "2021-10-06T22:26:23Z",
+          "comments": [
+            {
+              "originalPosition": 270,
+              "body": "Note in particular the s/HTTPS/HTTP/.\r\nThe new line after also helps readability.",
+              "createdAt": "2021-10-06T22:26:23Z",
+              "updatedAt": "2021-10-06T22:26:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uG5mN",
+          "commit": {
+            "abbreviatedOid": "5b969fc"
+          },
+          "author": "vcunat",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-07T07:53:36Z",
+          "updatedAt": "2021-10-07T07:53:36Z",
+          "comments": [
+            {
+              "originalPosition": 258,
+              "body": "The general consensus in the last decade or so is to avoid different classes than IN, if I remember right.  DNSOP would probably be able to provide some references; I can't find them quickly.",
+              "createdAt": "2021-10-07T07:53:36Z",
+              "updatedAt": "2021-10-07T07:53:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uJ4zA",
+          "commit": {
+            "abbreviatedOid": "5b969fc"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-07T20:09:26Z",
+          "updatedAt": "2021-10-07T20:32:58Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "OK, how about\r\n\r\n```suggestion\r\nbe needed for connection establishment if the SVCB record is absent, in order to minimize delay\r\nin that case and enable the optimizations discussed in {{optimizations}}.\r\n```",
+              "createdAt": "2021-10-07T20:09:26Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 133,
+              "body": "Responding to https://github.com/MikeBishop/dns-alt-svc/pull/335#r723694121\r\n\r\nIt's true that these queries might not be \"issued\", but I'd rather avoid discussing caches here.  Maybe we can solve this with more precise language:\r\n```suggestion\r\nfallback to lower-priority alternatives.  Clients resolve AAAA and/or A\r\nrecords for the selected TargetName, and MAY choose between them using an\r\n```",
+              "createdAt": "2021-10-07T20:12:35Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 132,
+              "body": "See below",
+              "createdAt": "2021-10-07T20:12:40Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 258,
+              "body": "This section is about defining the word \"SVCB-compatible\", so the question is: is a definition that allows other classes more useful, or less useful?\r\n\r\nI think it's probably less useful, because my goal is that resolvers and authorities should be able to add new SVCB-compatible RR types with a ~1 line change (just add another type number to the \"SVCB-compatible types\" list).  (And also because other classes no longer exist.)",
+              "createdAt": "2021-10-07T20:15:28Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 262,
+              "body": "I think a SVCB-based type that requires some additional logic is \"partially SVCB-compatible\".  That may be a good choice in the future, but I don't think we need to define it here.",
+              "createdAt": "2021-10-07T20:16:19Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 266,
+              "body": "Responding to https://github.com/MikeBishop/dns-alt-svc/pull/335#r723713663\r\n\r\nIs this clearer?\r\n```suggestion\r\nWhen following an AliasMode record ({{alias-mode}}) of RR type $T , the\r\nfollowup query to the TargetName MUST also be for type $T.\r\n```",
+              "createdAt": "2021-10-07T20:18:16Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 265,
+              "body": "See below.",
+              "createdAt": "2021-10-07T20:18:22Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            },
+            {
+              "originalPosition": 291,
+              "body": "OK, I've reintroduced the zone file format, to jog the reader's memory.",
+              "createdAt": "2021-10-07T20:29:46Z",
+              "updatedAt": "2021-10-07T20:32:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uKBnz",
+          "commit": {
+            "abbreviatedOid": "eeeb335"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-07T20:49:37Z",
+          "updatedAt": "2021-10-07T20:49:37Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nwith HTTP by avoiding the need for an Attrleaf label {{?Attrleaf=RFC8552}}\r\n```\r\n\r\nDo we also want a normative reference to HTTP here?",
+              "createdAt": "2021-10-07T20:49:37Z",
+              "updatedAt": "2021-10-07T20:49:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uKCxO",
+          "commit": {
+            "abbreviatedOid": "eeeb335"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good.  I see a few regressions relative to the issue on HTTPS/HTTP/\"http\"/\"https\" so we may want to re-open and take another pass after merging.",
+          "createdAt": "2021-10-07T20:51:48Z",
+          "updatedAt": "2021-10-07T20:51:48Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uKDbQ",
+          "commit": {
+            "abbreviatedOid": "53830bb"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-07T20:55:05Z",
+          "updatedAt": "2021-10-07T20:55:06Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I don't think we need a reference.",
+              "createdAt": "2021-10-07T20:55:05Z",
+              "updatedAt": "2021-10-07T20:55:06Z"
             }
           ]
         }
@@ -29464,24 +29700,26 @@
       "id": "PR_kwDOBsWBq84ry7Aw",
       "title": "Adjust use of HTTPS vs. \"https\", etc.",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/341",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #340",
       "createdAt": "2021-09-15T17:21:47Z",
-      "updatedAt": "2021-10-06T18:32:26Z",
+      "updatedAt": "2021-10-07T20:03:01Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
-      "baseRefOid": "cd2a236f1f35a624a1bf4f1be1c08c9ce2db37d3",
+      "baseRefOid": "0583a840c7b0b0bf88c4c2ee121e9fb50dd8022a",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-https",
-      "headRefOid": "b2be6d2cd526155829f11f89c1afcf5d00c4ea1e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b7e350f32ed8b047d4382dda2125b246d5a69f53",
+      "closedAt": "2021-10-07T20:02:54Z",
+      "mergedAt": "2021-10-07T20:02:54Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "be222a737c9cc808712c8f7257964ed466fdd27c"
+      },
       "comments": [
         {
           "author": "MikeBishop",
@@ -29865,6 +30103,39 @@
               "updatedAt": "2021-10-06T18:32:26Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFP4D",
+          "commit": {
+            "abbreviatedOid": "b2be6d2"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T19:11:20Z",
+          "updatedAt": "2021-10-06T19:11:21Z",
+          "comments": [
+            {
+              "originalPosition": 152,
+              "body": "Oops, thanks.  But ... hmm.  How about just\r\n```suggestion\r\nsecure and authenticated connection.\r\n```",
+              "createdAt": "2021-10-06T19:11:21Z",
+              "updatedAt": "2021-10-06T19:11:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFQRn",
+          "commit": {
+            "abbreviatedOid": "68be1a8"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-06T19:13:08Z",
+          "updatedAt": "2021-10-06T19:13:08Z",
+          "comments": []
         }
       ]
     },
@@ -29873,24 +30144,26 @@
       "id": "PR_kwDOBsWBq84sST6G",
       "title": "Correct ALPN comparison",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/344",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "martinthomson",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This is the more verbose of the two options I considered.  It includes\r\nmore contextual information about what a client might choose to do with\r\nHTTPS RRs.\r\n\r\nIn Alt-Svc, clients are required to consider an alternative \"failed\"\r\nwhen the chosen ALPN is not negotiated by a server.  (This is something\r\nI think we should remove, but I'll take that up in the revision.)  This\r\nis a point of comparison with HTTPS RRs that is worth highlighting.\r\n\r\nThis could just say:\r\n\r\n> Clients are not required to abort a connection attempt if a chosen\r\nALPN ID is not negotiated by the server.\r\n\r\nThe problem with that is that it doesn't really provide any information\r\non why that might be a problem.  Other text on the draft only really\r\ntalks about what to offer (which is absoltely the right thing to do).\r\nThat leaves readers with no context for the recommendation other than\r\ntext in RFC 7838.  This contextualizes it some.  It is perfectly\r\nreasonable for clients to only use HTTPS RRs for what they perceive to\r\nbe protocol upgrades, using fallback behaviour for old protocols like\r\nHTTP/1.1.\r\n\r\nCloses #343.",
       "createdAt": "2021-09-27T01:10:31Z",
-      "updatedAt": "2021-09-27T13:00:14Z",
+      "updatedAt": "2021-10-07T21:02:58Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
       "baseRefOid": "e6d2b3a33dd19c5f99023f8377716a97332269b2",
       "headRepository": "martinthomson/dns-alt-svc",
       "headRefName": "https-alpn-comparison",
-      "headRefOid": "87fe35e9f17f26dff22cd24b53884100a1b9403e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "71e50708110ae72b3a640033cdacaab115bdfacd",
+      "closedAt": "2021-10-07T21:02:58Z",
+      "mergedAt": "2021-10-07T21:02:57Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "46c7dbea060abb374bea8511ba138b39e02c8c1e"
+      },
       "comments": [],
       "reviews": [
         {
@@ -29912,6 +30185,112 @@
               "updatedAt": "2021-09-27T13:00:14Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFTPq",
+          "commit": {
+            "abbreviatedOid": "87fe35e"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T19:27:17Z",
+          "updatedAt": "2021-10-06T19:27:17Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Given that the text does say:\r\n>    If the connection to the alternative service does not negotiate the expected protocol (for example, ALPN fails to negotiate h2, or an Upgrade request to h2c is not accepted), the connection to the alternative service MUST be considered to have failed.\r\n\r\nperhaps we use some of this language?\r\n\r\n```suggestion\r\nUnlike Alt-Svc Field Values, HTTPS RRs can contain multiple ALPN IDs.  Clients are allowed to succeed and use  connections to alternatives that negotiate a protocol other than that indicated by the chosen ALPN IDs.\r\n```",
+              "createdAt": "2021-10-06T19:27:17Z",
+              "updatedAt": "2021-10-06T19:27:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFYF0",
+          "commit": {
+            "abbreviatedOid": "87fe35e"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T19:50:17Z",
+          "updatedAt": "2021-10-06T19:50:17Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I think that language will almost certainly be removed or substantially altered in Alt-Svc-bis, so attempting to match it or clarify it here is probably not going to age well.\r\n\r\nRather than risk a conflict with RFC 7838 or our own text, I think a back-ref might be best.\r\n\r\n```suggestion\r\nUnlike Alt-Svc Field Values, HTTPS RRs can contain multiple ALPN IDs.  The\r\nmeaning and use of these IDs is discussed in {{use}}.\r\n```\r\n",
+              "createdAt": "2021-10-06T19:50:17Z",
+              "updatedAt": "2021-10-06T19:50:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uFdAS",
+          "commit": {
+            "abbreviatedOid": "87fe35e"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T20:13:08Z",
+          "updatedAt": "2021-10-06T20:13:08Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I'm fine with Ben's latest proposal.  Martin?",
+              "createdAt": "2021-10-06T20:13:08Z",
+              "updatedAt": "2021-10-06T20:13:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uF5jL",
+          "commit": {
+            "abbreviatedOid": "87fe35e"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T22:51:23Z",
+          "updatedAt": "2021-10-06T22:51:23Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Yes, I think that Ben nailed it.",
+              "createdAt": "2021-10-06T22:51:23Z",
+              "updatedAt": "2021-10-06T22:51:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uF6kn",
+          "commit": {
+            "abbreviatedOid": "71e5070"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-06T22:59:36Z",
+          "updatedAt": "2021-10-06T22:59:36Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOBsWBq84uJE0j",
+          "commit": {
+            "abbreviatedOid": "71e5070"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-07T16:18:10Z",
+          "updatedAt": "2021-10-07T16:18:10Z",
+          "comments": []
         }
       ]
     },
@@ -29956,26 +30335,50 @@
       "id": "PR_kwDOBsWBq84sUIOj",
       "title": "Mention \"mandatory\" under \"Initial SvcParamKeys\"",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/347",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #310",
       "createdAt": "2021-09-27T13:37:51Z",
-      "updatedAt": "2021-09-27T13:37:51Z",
+      "updatedAt": "2021-10-06T19:14:25Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
       "baseRefOid": "58a76606928cf7e64033c5036266a67131a5c90e",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-add-mandatory",
-      "headRefOid": "ede2bf2810eeea9e4bdad96234bc6c2c17340c3c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "1058df07277ad52727b53b9c64647157b5a39628",
+      "closedAt": "2021-10-06T19:14:18Z",
+      "mergedAt": "2021-10-06T19:14:18Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "727d2065e0e5ff53e4999a208b074e93d1276915"
+      },
+      "comments": [
+        {
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good to me.  I also proposed an update to this.",
+          "createdAt": "2021-10-06T18:53:17Z",
+          "updatedAt": "2021-10-06T18:53:17Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOBsWBq84uFQFd",
+          "commit": {
+            "abbreviatedOid": "1058df0"
+          },
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-06T19:12:17Z",
+          "updatedAt": "2021-10-06T19:12:17Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 348,
@@ -30010,20 +30413,118 @@
       "id": "PR_kwDOBsWBq84s1oQN",
       "title": "mandatory to required to avoid confusion",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/350",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "enygren",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "We also used \"mandatory\" in a way different from the SvcParam.  Proposing changing that to \"required\"",
       "createdAt": "2021-10-06T18:52:28Z",
-      "updatedAt": "2021-10-06T18:52:28Z",
+      "updatedAt": "2021-10-06T19:11:55Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "bemasc-add-mandatory",
       "baseRefOid": "ede2bf2810eeea9e4bdad96234bc6c2c17340c3c",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "enygren-clarify-mandatory-wording",
       "headRefOid": "d95da44bde5119f2a9fb249d967de82f0b46c495",
+      "closedAt": "2021-10-06T19:11:55Z",
+      "mergedAt": "2021-10-06T19:11:55Z",
+      "mergedBy": "enygren",
+      "mergeCommit": {
+        "oid": "1058df07277ad52727b53b9c64647157b5a39628"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOBsWBq84uFPco",
+          "commit": {
+            "abbreviatedOid": "d95da44"
+          },
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-06T19:09:17Z",
+          "updatedAt": "2021-10-06T19:09:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 351,
+      "id": "PR_kwDOBsWBq84s13X6",
+      "title": "it appears that Attrleaf reference is normally Normative",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/pull/351",
+      "state": "MERGED",
+      "author": "moonshiner",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This address issue #300 ",
+      "createdAt": "2021-10-06T19:27:05Z",
+      "updatedAt": "2021-10-06T19:51:27Z",
+      "baseRepository": "MikeBishop/dns-alt-svc",
+      "baseRefName": "main",
+      "baseRefOid": "727d2065e0e5ff53e4999a208b074e93d1276915",
+      "headRepository": "moonshiner/dns-alt-svc",
+      "headRefName": "tjw-attrleaf",
+      "headRefOid": "7849a5fa90657f6933eaecc380c32ae3aa281cf1",
+      "closedAt": "2021-10-06T19:51:26Z",
+      "mergedAt": "2021-10-06T19:51:26Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "2a29628224f7196c13e73a81890932d01575b8b4"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 352,
+      "id": "PR_kwDOBsWBq84s2ObL",
+      "title": "Use GitHub Actions instead of Circle",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/pull/352",
+      "state": "MERGED",
+      "author": "MikeBishop",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-06T20:22:08Z",
+      "updatedAt": "2021-10-06T20:22:24Z",
+      "baseRepository": "MikeBishop/dns-alt-svc",
+      "baseRefName": "main",
+      "baseRefOid": "2a29628224f7196c13e73a81890932d01575b8b4",
+      "headRepository": "MikeBishop/dns-alt-svc",
+      "headRefName": "github_actions",
+      "headRefOid": "c7ab046e33ab09e4bca4ef5ab9c6a71b185f3a3c",
+      "closedAt": "2021-10-06T20:22:21Z",
+      "mergedAt": "2021-10-06T20:22:21Z",
+      "mergedBy": "MikeBishop",
+      "mergeCommit": {
+        "oid": "0583a840c7b0b0bf88c4c2ee121e9fb50dd8022a"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 353,
+      "id": "PR_kwDOBsWBq84s9gG5",
+      "title": "Changelog for -08",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/pull/353",
+      "state": "OPEN",
+      "author": "bemasc",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-08T20:34:10Z",
+      "updatedAt": "2021-10-08T20:34:16Z",
+      "baseRepository": "MikeBishop/dns-alt-svc",
+      "baseRefName": "main",
+      "baseRefOid": "46c7dbea060abb374bea8511ba138b39e02c8c1e",
+      "headRepository": "MikeBishop/dns-alt-svc",
+      "headRefName": "bemasc-changelog",
+      "headRefOid": "77227cd0105a58cc838b8330905e72762b447c7d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
