@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-10T00:22:38.782617+00:00",
+  "timestamp": "2021-10-14T00:21:23.235167+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -30511,26 +30511,42 @@
       "id": "PR_kwDOBsWBq84s9gG5",
       "title": "Changelog for -08",
       "url": "https://github.com/MikeBishop/dns-alt-svc/pull/353",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2021-10-08T20:34:10Z",
-      "updatedAt": "2021-10-08T20:34:16Z",
+      "updatedAt": "2021-10-12T19:57:19Z",
       "baseRepository": "MikeBishop/dns-alt-svc",
       "baseRefName": "main",
       "baseRefOid": "46c7dbea060abb374bea8511ba138b39e02c8c1e",
       "headRepository": "MikeBishop/dns-alt-svc",
       "headRefName": "bemasc-changelog",
       "headRefOid": "77227cd0105a58cc838b8330905e72762b447c7d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-10-12T19:57:16Z",
+      "mergedAt": "2021-10-12T19:57:16Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "d41f1fdb8b4cb136c24073f4480b4f611aed43fb"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOBsWBq84uWKmV",
+          "commit": {
+            "abbreviatedOid": "77227cd"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-10-12T15:44:39Z",
+          "updatedAt": "2021-10-12T15:44:39Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
