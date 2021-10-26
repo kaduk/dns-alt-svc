@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-14T00:21:23.235167+00:00",
+  "timestamp": "2021-10-26T00:21:43.925793+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6064,6 +6064,44 @@
           "body": "Good point.  #wontfix.",
           "createdAt": "2021-10-06T19:49:55Z",
           "updatedAt": "2021-10-06T19:49:55Z"
+        }
+      ]
+    },
+    {
+      "number": 354,
+      "id": "I_kwDOBsWBq849s_rm",
+      "title": "TCP Fast Open indication",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/issues/354",
+      "state": "OPEN",
+      "author": "Avamander",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It would be very useful if HTTPSVC record could indicate [TFO](https://en.wikipedia.org/wiki/TCP_Fast_Open) support. \r\n\r\nThere's no other good way to indicate this preference. [Previous attempts](https://bugzilla.mozilla.org/show_bug.cgi?id=1188435) at \"try it everywhere\" by some web browsers were (IMHO) too early and and too eager, resulting in very little benefit. Most mobile devices could simply not use it when it was last tried, that has changed by now. \r\n\r\nMore informed attempts at TFO would significantly increase its usefulness and give the technology a chance to gain adoption.",
+      "createdAt": "2021-10-25T14:24:13Z",
+      "updatedAt": "2021-10-25T15:41:45Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is an interesting idea, but I'm not sure it would help.  My impression is that servers (especially web servers) are reliably tolerant of TFO, and the problem is that [some network devices](https://bugzilla.mozilla.org/show_bug.cgi?id=1398201) are intolerant of TFO.  Having a signal from the origin that the server supports TFO wouldn't solve that problem.\r\n\r\nNevertheless, the SvcParam registry is essentially open (\"first come first served\"), so it is possible to register a codepoint for any extension you would like to see, even if there isn't broad consensus for it.  (Please don't abuse this.)",
+          "createdAt": "2021-10-25T15:13:10Z",
+          "updatedAt": "2021-10-25T15:13:10Z"
+        },
+        {
+          "author": "Avamander",
+          "authorAssociation": "NONE",
+          "body": "Yes, middleboxes are concern, but it would still have a benefit in those cases. Both the statistics and falling back for that session would be more accurate. Meaning - broken middlebox detection improves instead of guessing.\r\n\r\n> Nevertheless, the SvcParam registry is essentially open\r\n\r\nHow would that process look like, and would it be the best course of action for it to be usable?",
+          "createdAt": "2021-10-25T15:25:38Z",
+          "updatedAt": "2021-10-25T15:25:38Z"
+        },
+        {
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Middlebox statistics are easy(?): just send probes to some test domains with known configurations.  The fallback logic seems to be about the same with or without this signal.\r\n\r\nIf you're interested in pursuing this, I would strongly recommend emailing the [tsvarea](https://www.ietf.org/mailman/listinfo/tsv-area) or [tcpm](https://www.ietf.org/mailman/listinfo/tcpm) list for feedback first.  If there is support, you could write it up as a very short Internet-Draft, and use that draft as the documentation reference in a registration request to IANA.",
+          "createdAt": "2021-10-25T15:41:44Z",
+          "updatedAt": "2021-10-25T15:41:44Z"
         }
       ]
     }
