@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-26T00:21:43.925793+00:00",
+  "timestamp": "2021-11-11T00:22:47.515987+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6076,10 +6076,12 @@
       "author": "Avamander",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "future draft"
+      ],
       "body": "It would be very useful if HTTPSVC record could indicate [TFO](https://en.wikipedia.org/wiki/TCP_Fast_Open) support. \r\n\r\nThere's no other good way to indicate this preference. [Previous attempts](https://bugzilla.mozilla.org/show_bug.cgi?id=1188435) at \"try it everywhere\" by some web browsers were (IMHO) too early and and too eager, resulting in very little benefit. Most mobile devices could simply not use it when it was last tried, that has changed by now. \r\n\r\nMore informed attempts at TFO would significantly increase its usefulness and give the technology a chance to gain adoption.",
       "createdAt": "2021-10-25T14:24:13Z",
-      "updatedAt": "2021-10-25T15:41:45Z",
+      "updatedAt": "2021-11-09T15:01:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -6104,6 +6106,22 @@
           "updatedAt": "2021-10-25T15:41:44Z"
         }
       ]
+    },
+    {
+      "number": 355,
+      "id": "I_kwDOBsWBq84-giYb",
+      "title": "Overuse of should/SHOULD",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/issues/355",
+      "state": "OPEN",
+      "author": "enygren",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See this mailing list thread which recommends that we convert some SHOULD to MUST and which also points out some uses of \"should\" that would be better to fix:\r\nhttps://mailarchive.ietf.org/arch/msg/dnsop/EhP4nvJV1WEa4wiEIPPZIdLvIhc/",
+      "createdAt": "2021-11-09T15:07:26Z",
+      "updatedAt": "2021-11-09T15:07:26Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
