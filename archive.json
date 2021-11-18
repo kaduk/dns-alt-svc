@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-11-11T00:22:47.515987+00:00",
+  "timestamp": "2021-11-18T00:23:22.533470+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6122,6 +6122,37 @@
       "updatedAt": "2021-11-09T15:07:26Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 356,
+      "id": "I_kwDOBsWBq84--Zax",
+      "title": "Make sure we have the right meaning of \".\" with wildcard owner names",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/issues/356",
+      "state": "OPEN",
+      "author": "bemasc",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "When TargetName is \".\", and the record's owner name is a wildcard, it's clear what we want this to mean, but I'm not sure the text formally captures it.",
+      "createdAt": "2021-11-17T19:34:30Z",
+      "updatedAt": "2021-11-17T21:35:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "enygren",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Does wildcard even exist as a concept at the level of ownername?  I thought it (and some similar constructs) where a convenience for zone files.  But we should still be clear on this if there's confusion.",
+          "createdAt": "2021-11-17T20:31:11Z",
+          "updatedAt": "2021-11-17T20:31:11Z"
+        },
+        {
+          "author": "bemasc",
+          "authorAssociation": "COLLABORATOR",
+          "body": "As always, the terminology is a bit slippery.  For example, RFC 1034 [says](https://datatracker.ietf.org/doc/html/rfc1034#section-4.3.3)\r\n\r\n> In the previous algorithm, special treatment was given to RRs with owner\r\nnames starting with the label \"*\".  Such RRs are called wildcards.\r\nWildcard RRs can be thought of as instructions for synthesizing RRs.\r\nWhen the appropriate conditions are met, the name server creates RRs\r\nwith an owner name equal to the query name and contents taken from the\r\nwildcard RRs.\r\n",
+          "createdAt": "2021-11-17T21:35:17Z",
+          "updatedAt": "2021-11-17T21:35:17Z"
+        }
+      ]
     }
   ],
   "pulls": [
