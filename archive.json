@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-11-18T00:23:22.533470+00:00",
+  "timestamp": "2021-12-14T00:24:56.068032+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6151,6 +6151,37 @@
           "body": "As always, the terminology is a bit slippery.  For example, RFC 1034 [says](https://datatracker.ietf.org/doc/html/rfc1034#section-4.3.3)\r\n\r\n> In the previous algorithm, special treatment was given to RRs with owner\r\nnames starting with the label \"*\".  Such RRs are called wildcards.\r\nWildcard RRs can be thought of as instructions for synthesizing RRs.\r\nWhen the appropriate conditions are met, the name server creates RRs\r\nwith an owner name equal to the query name and contents taken from the\r\nwildcard RRs.\r\n",
           "createdAt": "2021-11-17T21:35:17Z",
           "updatedAt": "2021-11-17T21:35:17Z"
+        }
+      ]
+    },
+    {
+      "number": 357,
+      "id": "I_kwDOBsWBq85APCtr",
+      "title": "question on Appendix D, Figure 5",
+      "url": "https://github.com/MikeBishop/dns-alt-svc/issues/357",
+      "state": "OPEN",
+      "author": "rafaelvanoni",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi folks, I'm wondering if the following example is missing the quotes in its wire format portion:\r\n```\r\n   example.com.   SVCB   1 foo.example.com. key667=\"hello\\210qoo\"\r\n\r\n   \\# 32 (\r\n   00 01                                              ; priority\r\n   03 66 6f 6f 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 ; target\r\n   02 9b                                              ; key 667\r\n   00 09                                              ; length 9\r\n   68 65 6c 6c 6f d2 71 6f 6f                         ; value\r\n   )\r\n\r\n   \\x00\\x01                                           # priority\r\n   \\x03foo\\x07example\\x03com\\x00                      # target\r\n   \\x02\\x9b                                           # key 667\r\n   \\x00\\x09                                           # length 9\r\n   hello\\xd2qoo                                       # value\r\n\r\n       Figure 5: A generic key and quoted value with a decimal escape\r\n```\r\n\r\nShouldn't the value line be something like\r\n```\r\n`\\x22hello\\xd2qoo\\x22\" \r\n```\r\nSo that it matches the quoted text in the presentation format text ?\r\n\r\nThanks",
+      "createdAt": "2021-12-12T00:39:43Z",
+      "updatedAt": "2021-12-13T23:20:39Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "marka63",
+          "authorAssociation": "NONE",
+          "body": "\n\n> On 12 Dec 2021, at 11:39, Rafael Vanoni ***@***.***> wrote:\n> \n> \n> Hi folks, I'm wondering if the following example is missing the quotes in its wire format portion:\n> \n>    example.com.   SVCB   1 foo.example.com. key667=\"hello\\210qoo\"\n> \n>    \\# 32 (\n>    00 01                                              ; priority\n>    03 66 6f 6f 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 ; target\n>    02 9b                                              ; key 667\n>    00 09                                              ; length 9\n>    68 65 6c 6c 6f d2 71 6f 6f                         ; value\n>    )\n> \n>    \\x00\\x01                                           # priority\n>    \\x03foo\\x07example\\x03com\\x00                      # target\n>    \\x02\\x9b                                           # key 667\n>    \\x00\\x09                                           # length 9\n>    hello\\xd2qoo                                       # value\n> \n>        Figure 5: A generic key and quoted value with a decimal escape\n> \n> Shouldn't the value line be something like\n> \n> `\\x22hello\\xd2qoo\\x22\" \n> \n> ?\n\nNo.  For the double quotes to be part of the value it would need to be escaped.\nThe value is the part inside the double quotes.\n\n> Thanks\n> \n> \u2014\n> You are receiving this because you are subscribed to this thread.\n> Reply to this email directly, view it on GitHub, or unsubscribe.\n> Triage notifications on the go with GitHub Mobile for iOS or Android. \n> \n\n-- \nMark Andrews, ISC\n1 Seymour St., Dundas Valley, NSW 2117, Australia\nPHONE: +61 2 9871 4742              INTERNET: ***@***.***\n\n",
+          "createdAt": "2021-12-13T05:06:11Z",
+          "updatedAt": "2021-12-13T05:06:11Z"
+        },
+        {
+          "author": "rafaelvanoni",
+          "authorAssociation": "NONE",
+          "body": "Ok, but how do I know when to present a value with double quotes (and when not to) ?",
+          "createdAt": "2021-12-13T23:20:39Z",
+          "updatedAt": "2021-12-13T23:20:39Z"
         }
       ]
     }
