@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-12-14T00:24:56.068032+00:00",
+  "timestamp": "2021-12-16T00:23:35.013415+00:00",
   "repo": "MikeBishop/dns-alt-svc",
   "labels": [
     {
@@ -6166,7 +6166,7 @@
       "labels": [],
       "body": "Hi folks, I'm wondering if the following example is missing the quotes in its wire format portion:\r\n```\r\n   example.com.   SVCB   1 foo.example.com. key667=\"hello\\210qoo\"\r\n\r\n   \\# 32 (\r\n   00 01                                              ; priority\r\n   03 66 6f 6f 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 ; target\r\n   02 9b                                              ; key 667\r\n   00 09                                              ; length 9\r\n   68 65 6c 6c 6f d2 71 6f 6f                         ; value\r\n   )\r\n\r\n   \\x00\\x01                                           # priority\r\n   \\x03foo\\x07example\\x03com\\x00                      # target\r\n   \\x02\\x9b                                           # key 667\r\n   \\x00\\x09                                           # length 9\r\n   hello\\xd2qoo                                       # value\r\n\r\n       Figure 5: A generic key and quoted value with a decimal escape\r\n```\r\n\r\nShouldn't the value line be something like\r\n```\r\n`\\x22hello\\xd2qoo\\x22\" \r\n```\r\nSo that it matches the quoted text in the presentation format text ?\r\n\r\nThanks",
       "createdAt": "2021-12-12T00:39:43Z",
-      "updatedAt": "2021-12-13T23:20:39Z",
+      "updatedAt": "2021-12-14T05:34:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -6182,6 +6182,20 @@
           "body": "Ok, but how do I know when to present a value with double quotes (and when not to) ?",
           "createdAt": "2021-12-13T23:20:39Z",
           "updatedAt": "2021-12-13T23:20:39Z"
+        },
+        {
+          "author": "marka63",
+          "authorAssociation": "NONE",
+          "body": "\n\n> On 14 Dec 2021, at 10:20, Rafael Vanoni ***@***.***> wrote:\n> \n> \n> Ok, but how do I know when to present a value with double quotes (and when not to) ?\n\nYou make a decision as a implementor. There isn\u2019t a canonical format.\n\n> \u2014\n> You are receiving this because you commented.\n> Reply to this email directly, view it on GitHub, or unsubscribe.\n> Triage notifications on the go with GitHub Mobile for iOS or Android. \n> \n\n-- \nMark Andrews, ISC\n1 Seymour St., Dundas Valley, NSW 2117, Australia\nPHONE: +61 2 9871 4742              INTERNET: ***@***.***\n\n",
+          "createdAt": "2021-12-14T05:31:42Z",
+          "updatedAt": "2021-12-14T05:31:42Z"
+        },
+        {
+          "author": "rafaelvanoni",
+          "authorAssociation": "NONE",
+          "body": "Ah gotcha, they're mixed in the examples so I wasn't sure of that. Thanks for the clarification.",
+          "createdAt": "2021-12-14T05:34:06Z",
+          "updatedAt": "2021-12-14T05:34:06Z"
         }
       ]
     }
